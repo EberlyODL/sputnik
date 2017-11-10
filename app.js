@@ -16,6 +16,10 @@ sputnik.addEventListener('click', (e) => {
   toast.open();
 });
 
+const sayHello = function () {
+  toast.open('Hello');
+  console.log('hi');
+};
 
 if (annyang) {
   // Let's define our first command. First the text we expect, and then the function it should call
@@ -29,15 +33,20 @@ if (annyang) {
       toast.open();
     },
     'close dialog': function () {
-      console.log('close');
       dialog.close();
       answerdialog.close();
+    },
+    'hi': function () {
+      toast.show('Hello');
+    },
+    'hello': function () {
+      toast.show('Hello');
+    },
+    'hi there': function () {
+      toast.show('Hello');
     }
   });
 
-  // Add our commands to annyang
-  annyang.addCommands(commands);
-
   // Start listening. You can call this here, or attach this call to an event, button, etc.
-  annyang.start({ autoRestart: true });
+  annyang.start();
 }
