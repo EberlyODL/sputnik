@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, WebVR! - A-Frame</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/protyze/aframe-curve-component/master/dist/aframe-curve-component.min.js"></script> 
+    <script src="https://rawgit.com/protyze/aframe-alongpath-component/master/dist/aframe-alongpath-component.min.js"></script>
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v0.7.24/webcomponents-lite.min.js"></script>
+    <link href="https://cdn.rawgit.com/LRNWebComponents/build/0.2.0/build/default/build.html" rel="import" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/speechkitt.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-asset-item id="sputnikthing-obj" src="https://cdn.glitch.com/af5434bc-c6cd-4215-aa86-d0285a0ef161%2Fsputnikthing.obj?1509635115206"></a-asset-item>
+        <a-asset-item id="sputnikthing-mtl" src="https://cdn.glitch.com/af5434bc-c6cd-4215-aa86-d0285a0ef161%2Fsputnikthing.mtl?1509635111779"></a-asset-item>
+        <img id="space-texture" src="https://cdn.glitch.com/af5434bc-c6cd-4215-aa86-d0285a0ef161%2Fouter-space-Texture.jpg?1509635783418">
+      </a-assets>
+
+      <!-- Camera + Cursor. -->
+      <a-camera>
+        <a-cursor id="cursor" material="color:orange;shader:flat;">
+          <a-animation begin="click" easing="ease-in" attribute="scale"
+                       fill="backwards" from="0.1 0.1 0.1" to="1 1 1" dur="150"></a-animation>
+          <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
+                       from="1 1 1" to="0.1 0.1 0.1" dur="1500"></a-animation>
+        </a-cursor>
+      </a-camera>
+      
+      <!--       Curve -->
+      <a-curve id="track1">
+        <a-curve-point position="10 0 -50"></a-curve-point>
+        <a-curve-point position="0 10 -40"></a-curve-point>
+        <a-curve-point position="-10 0 -50"></a-curve-point>
+        \<a-curve-point position="0 -10 -30"></a-curve-point>
+        <a-curve-point position="10 0 -50"></a-curve-point>
+      </a-curve>
+
+      <a-entity alongpath="dur:52000;loop:true;curve:#track1">
+        <a-entity id="sputnik" cursor-listener obj-model="obj: #sputnikthing-obj; mtl: #sputnikthing-mtl" material="src:#space-texture"></a-entity>
+        <a-animation attribute="rotation"
+               dur="60000"
+               fill="both"
+               to="350 360 360"
+                direction="alternate"
+               repeat="infinite"></a-animation>
+      </a-entity>
+  
+
+      <a-sky src="#space-texture" id="sky"></a-sky>
+    </a-scene>
+    
+    <paper-toast id="toast" text="xapi statement sent"></paper-toast>
+    
+    <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+      <h2>Challenge</h2>
+      <paper-dialog-scrollable>
+        <p>Find Sputnik in deep space by moving the orange cursor over Sputnik and clicking on it!</p>
+        <p>You can also use voice commands by saying <strong>"I found you"</strong> or <strong>"Close Dialog"</strong>.</p>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Accept</paper-button>
+      </div>
+    </paper-dialog>
+    
+    <paper-dialog id="answerdialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop style="text-align:center;">
+      <h2><elmsln-loading style="padding:1em;"></elmsln-loading> <span id="completeheader">Challenge Complete!</span></h2>
+      <paper-dialog-scrollable>
+        You found Sputnik in deep space!
+      </paper-dialog-scrollable>
+    </paper-dialog>
+    
+    
+    <script src="/app.js"></script>
+  </body>
+</html>
